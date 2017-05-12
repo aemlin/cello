@@ -5,11 +5,17 @@
 source scripts/header.sh
 
 USER=`whoami`
-
+DISTRO=$( find /etc -type f -name '*-release' -a ! -name 'os-release' | cut -d'-' -f1 | cut -d'/' -f3)
 DB_DIR=/opt/${PROJECT}/mongo
-
-sudo apt-get update && sudo apt-get install -y -m curl docker-engine python-pip
-
+case "$DISTRO" in 
+   "centos","fedora","redhat")
+     sudo yum epel-release
+     sudo yum update && sudo yum install -y curl docker-ce python-pip
+   ;;
+   "ubuntu","debian")
+     sudo apt-get update && sudo apt-get install -y -m curl docker-engine python-pip
+   ;;
+esac
 sudo pip install --upgrade pip
 
 sudo pip install --upgrade tox
