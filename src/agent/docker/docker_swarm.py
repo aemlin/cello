@@ -155,12 +155,10 @@ def detect_daemon_type(daemon_url, timeout=5):
         client = Client(base_url=daemon_url, version="auto", timeout=timeout)
         server_version = client.info()['ServerVersion']
         server_swarm = client.info()['Swarm']['Cluster']['ID']
-        logger.debug("server version=",server_version," and swarm=",server_swarm)
+        logger.debug(server_version,server_swarm)
         if server_version.startswith('swarm') or server_swarm != "":
-            logger.debug("returning host type:",HOST_TYPES[1])
             return HOST_TYPES[1]
         else:
-            logger.debug("returning hot type:",HOST_TYPES[0])
             return HOST_TYPES[0]
     except Exception as e:
         logger.error(e)

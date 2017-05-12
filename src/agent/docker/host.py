@@ -60,7 +60,7 @@ class DockerHost(HostBase):
             return False
 
         detected_type = detect_daemon_type(daemon_url)
-        logger.warning("detected node type:",detected_type)
+        logger.warning("detected node type={}".format(detected_type))
         if detected_type not in ['docker', 'swarm']:
             logger.warning("Detected type={} is not docker or swarm".
                            format(detected_type))
